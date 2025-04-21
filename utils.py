@@ -68,8 +68,28 @@ def save_sample(G_AB, G_BA, real_A, real_B, epoch, save_dir="samples"):
 
     print(f"📷 Samples saved for epoch {epoch} in {save_dir}")
 
+def save_sample_v2(fake_A, fake_B, real_A, real_B, epoch, save_dir="samples"):
+    """
+    Génère et sauvegarde des images de démonstration pour chaque époque.
+    - real_A → fake_B
+    - real_B → fake_A
+    """
+    os.makedirs(save_dir, exist_ok=True)
 
-def save_model(G_AB, G_BA, D_A, D_B, epoch, save_dir="models"):
+    # Sauvegarder les images
+    save_image(real_A, os.path.join(save_dir, f"real_A_epoch_{epoch}.png"),
+               nrow=8, normalize=True)
+    save_image(fake_B, os.path.join(save_dir, f"fake_B_epoch_{epoch}.png"),
+               nrow=8, normalize=True)
+    save_image(real_B, os.path.join(save_dir, f"real_B_epoch_{epoch}.png"),
+               nrow=8, normalize=True)
+    save_image(fake_A, os.path.join(save_dir, f"fake_A_epoch_{epoch}.png"),
+               nrow=8, normalize=True)
+
+    print(f"📷 Samples saved for epoch {epoch} in {save_dir}")
+
+
+def save_model(G_AB, G_BA, D_A, D_B, epoch, save_dir="model_checkpoints"):
     """
     Sauvegarde les états complets des 4 réseaux à la fin de chaque époque.
     """
